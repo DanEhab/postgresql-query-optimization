@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  queries:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: admin123
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: admin123
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Create the four databases
+        run: psql -X -v ON_ERROR_STOP=1 -q -f setup/create_db_tables.sql
+      - name: Compile the population code
+        run: |
+          curl -sSLo postgresql.jar https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar
+          javac -d build -cp postgresql.jar population/*.java
+      - name: Populate schema 1
+        run: java -cp build:postgresql.jar Schema1 > populate1.log 2>&1; tail -n 2 populate1.log
+      - name: Populate schema 2
+        run: java -cp build:postgresql.jar Schema2 > populate2.log 2>&1; tail -n 2 populate2.log
+      - name: Populate schema 3
+        run: java -cp build:postgresql.jar Schema3 > populate3.log 2>&1; tail -n 2 populate3.log
+      - name: Populate schema 4
+        run: java -cp build:postgresql.jar Schema4 > populate4.log 2>&1; grep "completed" populate4.log
+      - name: Check the data against the project requirements
+        run: psql -X -v ON_ERROR_STOP=1 -q -f tests/check_population.sql
+      - name: Run the 12 original and optimized queries and compare their results
+        run: python3 tests/compare_queries.py
