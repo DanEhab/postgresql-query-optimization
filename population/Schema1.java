@@ -762,6 +762,12 @@ public class Schema1 {
 		populateSectionTime(connection, actualSectionCount, actualTimeSlotCount);
 	}
 
+	// Connection settings can be changed with the PGHOST, PGPORT, PGUSER and PGPASSWORD environment variables.
+	static String env(String name, String fallback) {
+		String value = System.getenv(name);
+		return value == null || value.isEmpty() ? fallback : value;
+	}
+
 	public static void main(String[] argv) {
 
 		System.out.println("-------- PostgreSQL " + "JDBC Connection Testing ------------");
@@ -782,7 +788,7 @@ public class Schema1 {
 
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/schema1", "postgres", "admin123");
+			connection = DriverManager.getConnection("jdbc:postgresql://" + env("PGHOST", "localhost") + ":" + env("PGPORT", "5432") + "/schema1", env("PGUSER", "postgres"), env("PGPASSWORD", "admin123"));
 			insertSchema1(connection);
 
 		} catch (SQLException e) {

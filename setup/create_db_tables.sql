@@ -1,4 +1,6 @@
-sudo -u postgres psql;
+-- Creates the four databases (schema1 to schema4) and their tables.
+-- Run it from a shell with:   psql -U postgres -f setup/create_db_tables.sql
+-- (The course version started with "sudo -u postgres psql;", the shell command that opens psql.)
 
 CREATE DATABASE schema1;
 

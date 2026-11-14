@@ -856,15 +856,21 @@ public class Schema4 {
 	}
 
 	public static void insertSchema4(Connection connection) {
-//		populateMovie(connection);
-//		populateReviewer(connection);
-//		populateGenres(connection);
-//		populateActor(connection);
-//		populateDirector(connection);
-//		populateMovieDirection(connection);
-//		populateMovieCast(connection);
-//		populateMovieGenres(connection);
+		populateMovie(connection);
+		populateReviewer(connection);
+		populateGenres(connection);
+		populateActor(connection);
+		populateDirector(connection);
+		populateMovieDirection(connection);
+		populateMovieCast(connection);
+		populateMovieGenres(connection);
 		populateRating(connection);
+	}
+
+	// Connection settings can be changed with the PGHOST, PGPORT, PGUSER and PGPASSWORD environment variables.
+	static String env(String name, String fallback) {
+		String value = System.getenv(name);
+		return value == null || value.isEmpty() ? fallback : value;
 	}
 
 	public static void main(String[] argv) {
@@ -888,7 +894,7 @@ public class Schema4 {
 		Connection connection = null;
 
 		try {
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/schema4", "postgres", "admin123");
+			connection = DriverManager.getConnection("jdbc:postgresql://" + env("PGHOST", "localhost") + ":" + env("PGPORT", "5432") + "/schema4", env("PGUSER", "postgres"), env("PGPASSWORD", "admin123"));
 			insertSchema4(connection);
 
 		} catch (SQLException e) {

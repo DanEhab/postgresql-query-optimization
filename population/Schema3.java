@@ -305,6 +305,12 @@ public class Schema3 {
 		populateReserves(connection);
 	}
 
+	// Connection settings can be changed with the PGHOST, PGPORT, PGUSER and PGPASSWORD environment variables.
+	static String env(String name, String fallback) {
+		String value = System.getenv(name);
+		return value == null || value.isEmpty() ? fallback : value;
+	}
+
 	public static void main(String[] argv) {
 
 		System.out.println("-------- PostgreSQL " + "JDBC Connection Testing ------------");
@@ -326,7 +332,7 @@ public class Schema3 {
 		Connection connection = null;
 
 		try {
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/schema3", "postgres", "admin123");
+			connection = DriverManager.getConnection("jdbc:postgresql://" + env("PGHOST", "localhost") + ":" + env("PGPORT", "5432") + "/schema3", env("PGUSER", "postgres"), env("PGPASSWORD", "admin123"));
 
 			insertSchema3(connection);
 
