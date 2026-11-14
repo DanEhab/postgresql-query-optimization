@@ -32,8 +32,8 @@ The full write-up, with all 120 query plans, is the [105-page report](docs/Repor
 |---|---|---|
 | `schema1` University | department, instructor, student, course, section, takes, … | 60 departments, 1,878 courses, 1,278 instructors, 67,311 students, 100,000 enrolments |
 | `schema2` Company | employee, department, project, works_on, dependent, … | 16,000 employees, 150 departments, 9,200 projects, 2,750 dependents |
-| `schema3` Sailors | sailors, boat, reserves | 19,000 sailors, 3,000 boats, 36,422 reservations |
-| `schema4` Movies | movie, actor, director, movie_cast, rating, … | 100,000 movies, 120,000 actors, 6,000 directors, 759,926 cast roles |
+| `schema3` Sailors | sailors, boat, reserves | 19,000 sailors, 3,000 boats, 35,000 reservations |
+| `schema4` Movies | movie, actor, director, movie_cast, rating, … | 100,000 movies, 120,000 actors, 6,000 directors, 758,512 cast roles |
 
 The generators in [`population/`](population) don't just insert random rows: they plant the values each query looks for (the MET department, boat 103, red and green boats, *Toy Story*, *Titanic*, Quentin Tarantino) so that every query returns between 45 and 33,393 rows.
 
