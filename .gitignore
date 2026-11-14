@@ -1,0 +1,13 @@
+# Build output and the downloaded JDBC driver
+build/
+*.class
+*.jar
+*.log
+
+# IDE files
+.metadata/
+.settings/
+.classpath
+.project
+.idea/
+.vscode/
