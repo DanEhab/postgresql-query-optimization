@@ -4,7 +4,7 @@
 
 **Four PostgreSQL databases filled with hundreds of thousands of generated rows, 12 SQL queries analysed with `EXPLAIN ANALYZE` under no index, B+ tree, hash, BRIN and mixed indexes, and a faster rewrite of each query that returns exactly the same result.**
 
-[![CI](https://github.com/DanEhab/DBProject_SchemaOptimization/actions/workflows/ci.yml/badge.svg)](https://github.com/DanEhab/DBProject_SchemaOptimization/actions/workflows/ci.yml)
+[![CI](https://github.com/DanEhab/postgresql-query-optimization/actions/workflows/ci.yml/badge.svg)](https://github.com/DanEhab/postgresql-query-optimization/actions/workflows/ci.yml)
 ![Database](https://img.shields.io/badge/Database-PostgreSQL%2016-336791?logo=postgresql&logoColor=white)
 ![Java](https://img.shields.io/badge/Data%20generation-Java%20%C2%B7%20JDBC-ed8b00?logo=openjdk&logoColor=white)
 ![Course](https://img.shields.io/badge/Course-Databases%20II-1f6feb)
